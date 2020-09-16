@@ -1,3 +1,5 @@
+import * as utils from '../js/utils.js';
+
 const audioContext = new AudioContext();
 let audioFireSize = 0; // we need a global scoped version because the step function doesn't have access to local
 let pan = audioContext.createStereoPanner(); // we need a global scoped version because the postProcess function doesn't have access to 'this'
@@ -12,8 +14,8 @@ export class Audio
     // Check compatibility
     // pureJS = 0, AudioWorklet = 1, ScriptProcessorNode = 2;
     this.mode = 0;
-    if (detectAudioWorklet()) this.mode = 1;
-    else if (detectScriptProcessorNode()) this.mode = 2;
+    if (utils.detectAudioWorklet()) this.mode = 1;
+    else if (utils.detectScriptProcessorNode()) this.mode = 2;
   }
 
   get sampleRate() {return audioContext.sampleRate}
@@ -23,7 +25,7 @@ export class Audio
   set fireSize(value) {
     audioFireSize = value;
     // set audioworklet
-    if (this.mode === 1) audio.noiseGenerator.parameters.get('size').value = value;
+    if (this.mode === 1 && this.noiseGenerator) this.noiseGenerator.parameters.get('size').value = value;
   }
 
   async start() {
