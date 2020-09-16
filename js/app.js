@@ -35,7 +35,7 @@ let guiControls = new function() {
 }
 let gui = new dat.GUI({width: 253});
 let f1 = gui.addFolder('Shape');
-f1.add(guiControls, 'distortion_amount', 0, 1).setValue(0.4).onChange(() => guiChange = true);
+f1.add(guiControls, 'distortion_amount', 0, 1).setValue(0.31).onChange(() => guiChange = true);
 let f2 = gui.addFolder('Colour');
 f2.add(guiControls, 'allColours', 0, 1).setValue(0).onChange(() => guiChange = true);
 f2.addColor(guiControls, 'colour1').onChange(() => guiChange = true);
